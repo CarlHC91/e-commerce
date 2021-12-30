@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDaoTest;
+import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDao;
 import com.capitolsolutions.ecommerce.model.entities.products.Product;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -27,7 +27,7 @@ public class ProductServiceTest {
 	private ProductService productService = new ProductServiceImpl();
 	
 	@Mock
-	private ProductDaoTest productDao;
+	private ProductDao productDao;
 
 	/**
 	 * Llamada a ProductService.findOneById con resultado OK

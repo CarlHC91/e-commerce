@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDaoTest;
+import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDao;
 import com.capitolsolutions.ecommerce.model.entities.brands.Brand;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -21,7 +21,7 @@ import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 public class BrandServiceImpl implements BrandService {
 
 	@Autowired
-	private BrandDaoTest brandDao;
+	private BrandDao brandDao;
 
 	/**
 	 * Metodo para consultar un grupo en base a su identificador.

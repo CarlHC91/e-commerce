@@ -23,7 +23,7 @@ import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDaoTest;
+import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDao;
 import com.capitolsolutions.ecommerce.model.entities.prices.Price;
 import com.capitolsolutions.ecommerce.services.brands.BrandService;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
@@ -36,7 +36,7 @@ public class PriceServiceTest {
 	private PriceService priceService = new PriceServiceImpl();
 	
 	@Mock
-	private PriceDaoTest priceDao;
+	private PriceDao priceDao;
 
 	@Mock
 	private BrandService brandService;

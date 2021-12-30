@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDaoTest;
+import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDao;
 import com.capitolsolutions.ecommerce.model.entities.products.Product;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -21,7 +21,7 @@ import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductDaoTest productDao;
+	private ProductDao productDao;
 
 	/**
 	 * Metodo para consultar un producto en base a su identificador.

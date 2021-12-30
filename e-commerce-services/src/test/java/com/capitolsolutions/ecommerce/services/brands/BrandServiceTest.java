@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDaoTest;
+import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDao;
 import com.capitolsolutions.ecommerce.model.entities.brands.Brand;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -27,7 +27,7 @@ public class BrandServiceTest {
 	private BrandService brandService = new BrandServiceImpl();
 	
 	@Mock
-	private BrandDaoTest brandDao;
+	private BrandDao brandDao;
 
 	/**
 	 * Llamada a BrandService.findOneById con resultado OK
