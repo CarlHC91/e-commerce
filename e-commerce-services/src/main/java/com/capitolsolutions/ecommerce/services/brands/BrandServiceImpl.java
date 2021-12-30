@@ -1,6 +1,5 @@
 package com.capitolsolutions.ecommerce.services.brands;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDao;
+import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.brands.Brand;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -22,7 +21,7 @@ import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 public class BrandServiceImpl implements BrandService {
 
 	@Autowired
-	private BrandDao brandDao;
+	private BrandDaoTest brandDao;
 
 	/**
 	 * Metodo para consultar un grupo en base a su identificador.
@@ -63,16 +62,18 @@ public class BrandServiceImpl implements BrandService {
 	 * @see BrandService
 	 */
 	public List<BrandDTO> findAll() {
-		List<BrandDTO> brandListDtoOut = new LinkedList<>();
+		List<Brand> brandListOut = brandDao.findAll();
 
-		for (Brand brand : brandDao.findAll()) {
-			BrandDTO brandDtoOut = new BrandBuilder()
+		List<BrandDTO> brandListDtoOut = brandListOut.stream()
+			.map(brand -> {
+				BrandDTO brandDtoOut = new BrandBuilder()
 					.withBrandId(brand.getBrandId())
 					.withName(brand.getName())
 					.build();
 
-			brandListDtoOut.add(brandDtoOut);
-		}
+				return brandDtoOut;
+			})
+			.toList();
 
 		return brandListDtoOut;
 	}

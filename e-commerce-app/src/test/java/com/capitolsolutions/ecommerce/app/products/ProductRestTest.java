@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
+import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 import com.capitolsolutions.ecommerce.services.products.ProductService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +30,9 @@ public class ProductRestTest {
 	@Mock
 	private ProductService productService;
 
+	/**
+	 * Llamada a ProductRest.findOneById con resultado OK
+	 */
 	@Test
 	public void testFindOneById_01() throws Exception {
 		
@@ -53,6 +57,32 @@ public class ProductRestTest {
 		assertNotNull(response);
 	}
 	
+	/**
+	 * Llamada a ProductRest.findOneById con exception ERROR
+	 */
+	@Test(expected = ServiceException.class)
+	public void testFindOneById_02() throws Exception {
+		
+		Mockito
+			.when(productService.findOneById(Mockito.any(ProductDTO.class)))
+			.thenThrow(new ServiceException());
+		
+		//////
+		
+		ProductDTO productDtoIn = new ProductBuilder()
+			.withProductId(0L)
+			.build();
+		
+		RequestEntity<ProductDTO> request = new RequestEntity<>(productDtoIn, HttpMethod.POST, new URI("/products/findOneById"));
+
+		ResponseEntity<ProductDTO> response = productRest.findOneById(request);
+		
+		assertNotNull(response);
+	}
+	
+	/**
+	 * Llamada a ProductRest.findAll con resultado OK
+	 */
 	@Test
 	public void testFindAll_01() throws Exception {
 		
@@ -69,6 +99,23 @@ public class ProductRestTest {
 		Mockito
 			.when(productService.findAll())
 			.thenReturn(productListDtoOut);
+		
+		//////
+		
+		ResponseEntity<List<ProductDTO>> response = productRest.findAll();
+		
+		assertNotNull(response);
+	}
+	
+	/**
+	 * Llamada a ProductRest.findAll con exception ERROR
+	 */
+	@Test(expected = ServiceException.class)
+	public void testFindAll_02() throws Exception {
+		
+		Mockito
+			.when(productService.findAll())
+			.thenThrow(new ServiceException());
 		
 		//////
 		

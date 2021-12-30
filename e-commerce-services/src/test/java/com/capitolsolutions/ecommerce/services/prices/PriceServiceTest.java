@@ -23,7 +23,7 @@ import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDao;
+import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.prices.Price;
 import com.capitolsolutions.ecommerce.services.brands.BrandService;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
@@ -36,13 +36,16 @@ public class PriceServiceTest {
 	private PriceService priceService = new PriceServiceImpl();
 	
 	@Mock
-	private PriceDao priceDao;
+	private PriceDaoTest priceDao;
 
 	@Mock
 	private BrandService brandService;
 	@Mock
 	private ProductService productService;
 	
+	/**
+	 * Llamada a PriceService.findOneById con resultado OK
+	 */
 	@Test
 	public void testFindOneById_01() {
 		
@@ -87,6 +90,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneById con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_02() {
 		
@@ -98,6 +104,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneById con error al no encontrar resultados ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_03() {
 		
@@ -116,6 +125,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findAll con resultado OK
+	 */
 	@Test
 	public void testFindAll_01() {
 		
@@ -163,6 +175,9 @@ public class PriceServiceTest {
 		assertFalse(priceListDtoOut.isEmpty());
 	}
 
+	/**
+	 * Llamada a PriceService.findOneByFilter con resultado OK
+	 */
 	@Test
 	public void testFindOneByFilter_01() {
 		
@@ -209,6 +224,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneByFilter con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneByFilter_02() {
 		
@@ -254,6 +272,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneByFilter con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneByFilter_03() {
 		
@@ -299,6 +320,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneByFilter con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneByFilter_04() {
 		
@@ -344,6 +368,9 @@ public class PriceServiceTest {
 		assertNotNull(priceDtoOut);
 	}
 	
+	/**
+	 * Llamada a PriceService.findOneByFilter con error al no encontrar resultados ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneByFilter_05() {
 		

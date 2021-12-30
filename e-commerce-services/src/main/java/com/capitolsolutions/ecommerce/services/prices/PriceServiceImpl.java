@@ -1,6 +1,5 @@
 package com.capitolsolutions.ecommerce.services.prices;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDao;
+import com.capitolsolutions.ecommerce.dao.repositories.prices.PriceDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.prices.Price;
 import com.capitolsolutions.ecommerce.services.brands.BrandService;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
@@ -29,7 +28,7 @@ import com.capitolsolutions.ecommerce.services.products.ProductService;
 public class PriceServiceImpl implements PriceService {
 
 	@Autowired
-	private PriceDao priceDao;
+	private PriceDaoTest priceDao;
 
 	@Autowired
 	private BrandService brandService;
@@ -91,20 +90,21 @@ public class PriceServiceImpl implements PriceService {
 	 * @see PriceService
 	 */
 	public List<PriceDTO> findAll() {
-		List<PriceDTO> priceListDtoOut = new LinkedList<>();
-		
-		for (Price price: priceDao.findAll()) {
-			BrandDTO brandDtoOut = null;
-			if (price.getBrandId() != null) {
-				brandDtoOut = callBrandServiceFindOneById(price.getBrandId());
-			}
-			
-			ProductDTO productDtoOut = null;
-			if (price.getProductId() != null) {
-				productDtoOut = callProductServiceFindOneById(price.getProductId());
-			}
-			
-			PriceDTO priceDtoOut = new PriceBuilder()
+		List<Price> priceListOut = priceDao.findAll();
+
+		List<PriceDTO> priceListDtoOut = priceListOut.stream()
+			.map(price -> {
+				BrandDTO brandDtoOut = null;
+				if (price.getBrandId() != null) {
+					brandDtoOut = callBrandServiceFindOneById(price.getBrandId());
+				}
+				
+				ProductDTO productDtoOut = null;
+				if (price.getProductId() != null) {
+					productDtoOut = callProductServiceFindOneById(price.getProductId());
+				}
+				
+				PriceDTO priceDtoOut = new PriceBuilder()
 					.withPriceList(price.getPriceList())
 					.withBrand(brandDtoOut)
 					.withStartDate(price.getStartDate())
@@ -115,8 +115,9 @@ public class PriceServiceImpl implements PriceService {
 					.withCurr(price.getCurr())
 					.build();
 
-			priceListDtoOut.add(priceDtoOut);
-		}
+				return priceDtoOut;
+			})
+			.toList();
 
 		return priceListDtoOut;
 	}

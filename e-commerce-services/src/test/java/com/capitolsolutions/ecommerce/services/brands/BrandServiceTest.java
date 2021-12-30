@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDao;
+import com.capitolsolutions.ecommerce.dao.repositories.brands.BrandDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.brands.Brand;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -27,8 +27,11 @@ public class BrandServiceTest {
 	private BrandService brandService = new BrandServiceImpl();
 	
 	@Mock
-	private BrandDao brandDao;
+	private BrandDaoTest brandDao;
 
+	/**
+	 * Llamada a BrandService.findOneById con resultado OK
+	 */
 	@Test
 	public void testFindOneById_01() {
 		
@@ -51,6 +54,9 @@ public class BrandServiceTest {
 		assertNotNull(brandDtoOut);
 	}
 	
+	/**
+	 * Llamada a BrandService.findOneById con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_02() {
 		
@@ -62,6 +68,9 @@ public class BrandServiceTest {
 		assertNotNull(brandDtoOut);
 	}
 	
+	/**
+	 * Llamada a BrandService.findOneById con error al no encontrar resultados ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_03() {
 		
@@ -80,6 +89,9 @@ public class BrandServiceTest {
 		assertNotNull(brandDtoOut);
 	}
 	
+	/**
+	 * Llamada a BrandService.findAll con resultado OK
+	 */
 	@Test
 	public void testFindAll_01() {
 		

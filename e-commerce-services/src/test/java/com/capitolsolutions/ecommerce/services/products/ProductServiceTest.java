@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDao;
+import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.products.Product;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -27,8 +27,11 @@ public class ProductServiceTest {
 	private ProductService productService = new ProductServiceImpl();
 	
 	@Mock
-	private ProductDao productDao;
+	private ProductDaoTest productDao;
 
+	/**
+	 * Llamada a ProductService.findOneById con resultado OK
+	 */
 	@Test
 	public void testFindOneById_01() {
 		
@@ -51,6 +54,9 @@ public class ProductServiceTest {
 		assertNotNull(productDtoOut);
 	}
 	
+	/**
+	 * Llamada a ProductService.findOneById con error en parametros de entrada ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_02() {
 		
@@ -62,6 +68,9 @@ public class ProductServiceTest {
 		assertNotNull(productDtoOut);
 	}
 	
+	/**
+	 * Llamada a ProductService.findOneById con error al no encontrar resultados ERROR
+	 */
 	@Test(expected = ServiceException.class)
 	public void testFindOneById_03() {
 		
@@ -80,6 +89,9 @@ public class ProductServiceTest {
 		assertNotNull(productDtoOut);
 	}
 	
+	/**
+	 * Llamada a ProductService.findAll con resultado OK
+	 */
 	@Test
 	public void testFindAll_01() {
 		

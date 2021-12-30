@@ -1,6 +1,5 @@
 package com.capitolsolutions.ecommerce.services.products;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capitolsolutions.ecommerce.products.builders.ProductBuilder;
 import com.capitolsolutions.ecommerce.products.pojos.ProductDTO;
-import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDao;
+import com.capitolsolutions.ecommerce.dao.repositories.products.ProductDaoTest;
 import com.capitolsolutions.ecommerce.model.entities.products.Product;
 import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
@@ -22,7 +21,7 @@ import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductDao productDao;
+	private ProductDaoTest productDao;
 
 	/**
 	 * Metodo para consultar un producto en base a su identificador.
@@ -63,16 +62,18 @@ public class ProductServiceImpl implements ProductService {
 	 * @see ProductService
 	 */
 	public List<ProductDTO> findAll() {
-		List<ProductDTO> productListDtoOut = new LinkedList<>();
-		
-		for (Product product: productDao.findAll()) {
-			ProductDTO productDtoOut = new ProductBuilder()
+		List<Product> productListOut = productDao.findAll();
+
+		List<ProductDTO> productListDtoOut = productListOut.stream()
+			.map(product -> {
+				ProductDTO productDtoOut = new ProductBuilder()
 					.withProductId(product.getProductId())
 					.withName(product.getName())
 					.build();
 
-			productListDtoOut.add(productDtoOut);
-		}
+				return productDtoOut;
+			})
+			.toList();
 
 		return productListDtoOut;
 	}

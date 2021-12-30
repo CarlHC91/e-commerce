@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import com.capitolsolutions.ecommerce.brands.builders.BrandBuilder;
 import com.capitolsolutions.ecommerce.brands.pojos.BrandDTO;
 import com.capitolsolutions.ecommerce.services.brands.BrandService;
+import com.capitolsolutions.ecommerce.services.exceptions.ServiceException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BrandRestTest {
@@ -29,6 +30,9 @@ public class BrandRestTest {
 	@Mock
 	private BrandService brandService;
 
+	/**
+	 * Llamada a BrandRest.findOneById con resultado OK
+	 */
 	@Test
 	public void testFindOneById_01() throws Exception {
 		
@@ -53,6 +57,32 @@ public class BrandRestTest {
 		assertNotNull(response);
 	}
 	
+	/**
+	 * Llamada a BrandRest.findOneById con exception ERROR
+	 */
+	@Test(expected = ServiceException.class)
+	public void testFindOneById_02() throws Exception {
+		
+		Mockito
+			.when(brandService.findOneById(Mockito.any(BrandDTO.class)))
+			.thenThrow(new ServiceException());
+		
+		//////
+		
+		BrandDTO brandDtoIn = new BrandBuilder()
+			.withBrandId(0L)
+			.build();
+		
+		RequestEntity<BrandDTO> request = new RequestEntity<>(brandDtoIn, HttpMethod.POST, new URI("/brands/findOneById"));
+
+		ResponseEntity<BrandDTO> response = brandRest.findOneById(request);
+		
+		assertNotNull(response);
+	}
+	
+	/**
+	 * Llamada a BrandRest.findAll con resultado OK
+	 */
 	@Test
 	public void testFindAll_01() throws Exception {
 		
@@ -77,4 +107,21 @@ public class BrandRestTest {
 		assertNotNull(response);
 	}
 
+	/**
+	 * Llamada a BrandRest.findAll con exception ERROR
+	 */
+	@Test(expected = ServiceException.class)
+	public void testFindAll_02() throws Exception {
+		
+		Mockito
+			.when(brandService.findAll())
+			.thenThrow(new ServiceException());
+		
+		//////
+		
+		ResponseEntity<List<BrandDTO>> response = brandRest.findAll();
+		
+		assertNotNull(response);
+	}
+	
 }
